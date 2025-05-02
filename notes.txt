@@ -1,0 +1,13 @@
+sudo systemctl start mongod
+sudo run build
+
+add history page
+
+overhaul branding and css and layouts
+
+is middleware needed?
+send branding and images to the client -- public (folder for assets)
+
+create a deployment script for the server and client to go along with installation
+
+create a new branch for the new feature
