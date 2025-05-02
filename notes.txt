@@ -11,3 +11,5 @@ send branding and images to the client -- public (folder for assets)
 create a deployment script for the server and client to go along with installation
 
 create a new branch for the new feature
+
+bump
