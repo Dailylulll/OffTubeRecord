@@ -19,19 +19,20 @@ app.use(express.json());
 // Static uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Serve React client build static files from correct path
-app.use(express.static(path.join(__dirname, 'client/build')));
+// Serve React client build static files and index.html only in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/youtube', youtubeRoutes);  // mount YouTube API endpoints
 app.use('/api/history', historyRoutes);  // mount history API endpoints
-
-// Always return index.html for non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
