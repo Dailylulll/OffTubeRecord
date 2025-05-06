@@ -14,18 +14,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 1.25rem;
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--color-primary);
 }
 
 @keyframes App-logo-spin {
@@ -35,19 +35,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-/* Prevent fixed-top navbar from covering content */
-body {
-  padding-top: 70px;
-}
-
-/* Add border to buttons */
-.btn {
-  border: 1px solid #333 !important;
-}
-
-/* Add border to video cards */
-.card {
-  border: 1px solid #ddd !important;
 }

@@ -1,0 +1,23 @@
+sudo systemctl start mongod
+npm run build
+
+"proxy": "http://localhost:5000",
+
+npm run server
+npm run client
+npm run dev
+
+TODO:
+
+Input validation and error handling – 10 pts
+
+Full CRUD capability – 20 pts
+
+Seed or test data included – 10 pts
+
+Caleb TODO:
+
+test installation instructions and test drive App
+create powerpoint presentation
+review project requirements
+Bundle and deploy app in vercel for bonus points 
