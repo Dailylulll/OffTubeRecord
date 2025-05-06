@@ -8,6 +8,20 @@ const VideoDetail = () => {
   const [content, setContent] = useState('');
   const token = localStorage.getItem('token');
 
+  // record video view in history
+  React.useEffect(() => {
+    if (token) {
+      fetch('/api/history/video', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ videoId })
+      }).catch(err => console.error(err));
+    }
+  }, [videoId, token]);
+
   useEffect(() => {
     fetch(`/api/comments/${videoId}`)
       .then(res => res.json())

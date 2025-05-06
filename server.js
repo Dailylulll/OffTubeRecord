@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/comments');
 const youtubeRoutes = require('./routes/youtube');  // import YouTube routes
+const historyRoutes = require('./routes/history');  // import history routes
 const path = require('path');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/youtube', youtubeRoutes);  // mount YouTube API endpoints
+app.use('/api/history', historyRoutes);  // mount history API endpoints
 
 // Always return index.html for non-API routes
 app.get('*', (req, res) => {
