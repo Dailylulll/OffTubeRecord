@@ -7,10 +7,6 @@ npm run server
 npm run client
 npm run dev
 
-TODO:
-
-Seed or test data included – 10 pts
-
 Caleb TODO:
 
 test installation instructions and test drive App

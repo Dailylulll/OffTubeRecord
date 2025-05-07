@@ -15,19 +15,19 @@ A full-stack application for recording and viewing YouTube video histories and c
 1. Install MongoDB Community Edition:
    ```bash
    sudo apt update
-   sudo apt install -y mongodb
+   sudo apt install -y mongod
    ```
 2. Start the MongoDB service:
    ```bash
-   sudo systemctl start mongodb
+   sudo systemctl start mongod
    ```
 3. Enable automatic start on boot:
    ```bash
-   sudo systemctl enable mongodb
+   sudo systemctl enable mongod
    ```
 4. Verify MongoDB is running on port 27017:
    ```bash
-   sudo systemctl status mongodb
+   sudo systemctl status mongod
    ```
 
 ## Project Structure
