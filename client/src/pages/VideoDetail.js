@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import $ from 'jquery';
+import Comment from '../components/Comment';
 
 const VideoDetail = () => {
   const { videoId } = useParams();
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
+  const [userId, setUserId] = useState(null);
   const token = localStorage.getItem('token');
 
   // record video view in history
@@ -21,6 +23,16 @@ const VideoDetail = () => {
       }).catch(err => console.error(err));
     }
   }, [videoId, token]);
+
+  // fetch current user ID to check ownership
+  useEffect(() => {
+    if (token) {
+      fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+        .then(res => res.json())
+        .then(data => setUserId(data.id))
+        .catch(err => console.error(err));
+    }
+  }, [token]);
 
   useEffect(() => {
     fetch(`/api/comments/${videoId}`)
@@ -52,6 +64,40 @@ const VideoDetail = () => {
       }
     } catch (err) {
       $('#commentAlert').removeClass('d-none').text('Server error').fadeIn().delay(3000).fadeOut();
+    }
+  };
+
+  // handlers for editing and deleting comments
+  const updateComment = async (id, content) => {
+    try {
+      const res = await fetch(`/api/comments/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ content })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setComments(comments.map(c => c._id === id ? updated : c));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteComment = async (id) => {
+    try {
+      const res = await fetch(`/api/comments/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setComments(comments.filter(c => c._id !== id));
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -89,14 +135,18 @@ const VideoDetail = () => {
         )}
       </div>
       <h4 className="mb-3">Comments</h4>
-      <ul className="list-group">
+      <div className="list-group">
         {comments.map(c => (
-          <li key={c._id} className="list-group-item">
-            <strong>{c.author.name}</strong> <small className="text-muted float-end">{new Date(c.createdAt).toLocaleString()}</small>
-            <p className="mt-2 mb-0">{c.content}</p>
-          </li>
+          <Comment
+            key={c._id}
+            comment={c}
+            onUpdate={updateComment}
+            onDelete={deleteComment}
+            showLink={false}
+            isAuthor={userId === c.author._id}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

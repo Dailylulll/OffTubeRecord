@@ -54,7 +54,8 @@ const Navbar = () => {
         <div className="d-flex ms-auto align-items-center">
           {isAuth ? (
             <>
-              <div className="nav-item dropdown">
+              <span className="navbar-text me-2">Signed in as {userName}</span>
+              <div className="nav-item dropdown ms-2">
                 <a className="nav-link dropdown-toggle" href="#" id="historyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   History
                 </a>
@@ -63,8 +64,7 @@ const Navbar = () => {
                   <li><Link className="dropdown-item" to="/history/comments">Comments</Link></li>
                 </ul>
               </div>
-              <span className="navbar-text me-2">Signed in as {userName}</span>
-              <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
+              <button className="btn btn-link nav-link ms-2" onClick={handleLogout}>Logout</button>
             </>
           ) : (
             <>

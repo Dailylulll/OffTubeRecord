@@ -8,8 +8,26 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // Validation regex patterns
+  const nameRegex = /^[a-zA-Z0-9]{3,20}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
   const handleSubmit = async e => {
     e.preventDefault();
+    // Client-side validations
+    if (!nameRegex.test(name)) {
+      $('#registerAlert').text('Username must be 3-20 alphanumeric characters').removeClass('d-none').fadeIn().delay(3000).fadeOut();
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      $('#registerAlert').text('Please enter a valid email address').removeClass('d-none').fadeIn().delay(3000).fadeOut();
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      $('#registerAlert').text('Password must be at least 8 characters and include letters and numbers').removeClass('d-none').fadeIn().delay(3000).fadeOut();
+      return;
+    }
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',

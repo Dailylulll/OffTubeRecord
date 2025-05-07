@@ -4,11 +4,26 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 
+// Validation regex patterns
+const nameRegex = /^[a-zA-Z0-9]{3,20}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
 // @route   POST /api/auth/register
 // @desc    Register new user
 // @access  Public
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
+  // Server-side validations
+  if (!nameRegex.test(name)) {
+    return res.status(400).json({ message: 'Username must be 3-20 alphanumeric characters' });
+  }
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: 'Please enter a valid email address' });
+  }
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({ message: 'Password must be at least 8 characters and include letters and numbers' });
+  }
   try {
     let user = await User.findOne({ email });
     if (user) {

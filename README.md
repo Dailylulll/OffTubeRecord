@@ -120,6 +120,19 @@ This will start both the server (on port 5000) and the client (on port 3000) con
   ```
   Runs the React app on [http://localhost:3000](http://localhost:3000).
 
+## Seeding the Database
+
+Once your environment is configured and dependencies are installed, you can populate the database with test seed data (a user, a sample video history, and a comment) by running:
+
+```bash
+cd server
+npm run seed
+```
+**Test user info**
+name: 'Test User',
+email: 'test@example.com',
+password: 'password123'
+
 ## Production Build
 
 To build the client for production:

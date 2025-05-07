@@ -8,6 +8,7 @@ import VideoDetail from './pages/VideoDetail';
 import SearchResults from './pages/SearchResults';  // new search results page
 import HistoryVideos from './pages/HistoryVideos';
 import HistoryComments from './pages/HistoryComments';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/videos/:videoId" element={<VideoDetail />} />
         </Routes>
       </div>
+      <Footer />
     </>
   );
 }

@@ -9,10 +9,6 @@ npm run dev
 
 TODO:
 
-Input validation and error handling – 10 pts
-
-Full CRUD capability – 20 pts
-
 Seed or test data included – 10 pts
 
 Caleb TODO:

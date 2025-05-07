@@ -55,13 +55,14 @@ router.get('/comments', protect, async (req, res) => {
     // map id to title
     const titleMap = {};
     data.items.forEach(item => { titleMap[item.id] = item.snippet.title; });
-    // enrich comments with title
+    // enrich comments with title and author
     const enriched = comments.map(c => ({
       _id: c._id,
       content: c.content,
       videoId: c.videoId,
       title: titleMap[c.videoId] || '',
-      createdAt: c.createdAt
+      createdAt: c.createdAt,
+      author: { _id: req.user._id, name: req.user.name }
     }));
     res.json(enriched);
   } catch (err) {

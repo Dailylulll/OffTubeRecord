@@ -34,4 +34,43 @@ router.post('/', protect, async (req, res) => {
   }
 });
 
+// @route   PUT /api/comments/:id
+// @desc    Update a comment
+// @access  Private
+router.put('/:id', protect, async (req, res) => {
+  const { content } = req.body;
+  try {
+    const comment = await Comment.findById(req.params.id);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
+    if (comment.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+    comment.content = content;
+    await comment.save();
+    await comment.populate('author', 'name');
+    res.json(comment);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   DELETE /api/comments/:id
+// @desc    Delete a comment
+// @access  Private
+router.delete('/:id', protect, async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.id);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
+    if (comment.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+    await comment.remove();
+    res.json({ message: 'Comment deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
