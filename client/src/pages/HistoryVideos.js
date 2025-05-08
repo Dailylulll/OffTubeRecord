@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = process.env.REACT_APP_API_URL;
-
 const HistoryVideos = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const [history, setHistory] = useState([]);
   const token = localStorage.getItem('token');
 

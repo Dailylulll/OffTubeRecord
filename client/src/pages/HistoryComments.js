@@ -20,7 +20,7 @@ const HistoryComments = () => {
   // fetch current user ID to check ownership
   useEffect(() => {
     if (token) {
-      fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+      fetch(`${API_URL}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
         .then(res => res.json())
         .then(data => setUserId(data.id))
         .catch(err => console.error(err));
@@ -30,7 +30,7 @@ const HistoryComments = () => {
   // handlers for editing and deleting comments
   const updateComment = async (id, content) => {
     try {
-      const res = await fetch(`/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/comments/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const HistoryComments = () => {
 
   const deleteComment = async (id) => {
     try {
-      const res = await fetch(`/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/comments/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
