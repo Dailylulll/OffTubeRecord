@@ -4,6 +4,7 @@
   "description": "OffTube Record API",
   "main": "server.js",
   "scripts": {
+    "postinstall": "cd ../client && npm install && npm run build",
     "start": "node server.js",
     "server": "nodemon server.js",
     "seed": "node seeder.js"
