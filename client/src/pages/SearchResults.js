@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 const SearchResults = () => {
@@ -10,7 +12,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     if (queryParam) {
-      axios.get(`/api/youtube/search?q=${encodeURIComponent(queryParam)}`)
+      axios.get(`${API_URL}/youtube/search?q=${encodeURIComponent(queryParam)}`)
         .then(res => setVideos(res.data))
         .catch(err => console.error(err));
     }

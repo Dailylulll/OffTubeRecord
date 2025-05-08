@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const HistoryVideos = () => {
   const [history, setHistory] = useState([]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch('/api/history/videos', {
+    fetch(`${API_URL}/history/videos`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())

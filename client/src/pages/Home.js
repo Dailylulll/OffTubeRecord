@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Home = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/youtube/trending')
+    axios.get(`${API_URL}/youtube/trending`)
       .then(res => setVideos(res.data))
       .catch(err => console.error(err));
   }, []);

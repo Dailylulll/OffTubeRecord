@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import $ from 'jquery';
 import Comment from '../components/Comment';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const VideoDetail = () => {
   const { videoId } = useParams();
@@ -13,7 +14,7 @@ const VideoDetail = () => {
   // record video view in history
   React.useEffect(() => {
     if (token) {
-      fetch('/api/history/video', {
+      fetch(`${API_URL}/history/video`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ const VideoDetail = () => {
   // fetch current user ID to check ownership
   useEffect(() => {
     if (token) {
-      fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+      fetch(`${API_URL}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
         .then(res => res.json())
         .then(data => setUserId(data.id))
         .catch(err => console.error(err));
@@ -35,7 +36,7 @@ const VideoDetail = () => {
   }, [token]);
 
   useEffect(() => {
-    fetch(`/api/comments/${videoId}`)
+    fetch(`${API_URL}/comments/${videoId}`)
       .then(res => res.json())
       .then(data => setComments(data))
       .catch(err => console.error(err));
@@ -45,7 +46,7 @@ const VideoDetail = () => {
     e.preventDefault();
     if (!token) return;
     try {
-      const res = await fetch('/api/comments', {
+      const res = await fetch(`${API_URL}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ const VideoDetail = () => {
   // handlers for editing and deleting comments
   const updateComment = async (id, content) => {
     try {
-      const res = await fetch(`/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/comments/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +90,7 @@ const VideoDetail = () => {
 
   const deleteComment = async (id) => {
     try {
-      const res = await fetch(`/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/comments/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

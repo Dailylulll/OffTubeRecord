@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Navbar = () => {
   const [query, setQuery] = useState('');
   const [isAuth, setIsAuth] = useState(false);
@@ -13,7 +15,7 @@ const Navbar = () => {
     // fetch current user info when authenticated
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('/api/auth/me', {
+      fetch(`${API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())

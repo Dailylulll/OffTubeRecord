@@ -10,6 +10,12 @@ const path = require('path');
 
 const app = express();
 
+// CORS setup
+const cors = require('cors');
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
+app.use(cors({ origin: CLIENT_URL }));
+app.options('*', cors());
+
 // Connect to database
 connectDB();
 

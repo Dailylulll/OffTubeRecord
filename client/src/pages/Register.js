@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -29,7 +30,7 @@ const Register = () => {
       return;
     }
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })

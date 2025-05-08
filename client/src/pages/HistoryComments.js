@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Comment from '../components/Comment';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 const HistoryComments = () => {
   const [comments, setComments] = useState([]);
@@ -8,7 +9,7 @@ const HistoryComments = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch('/api/history/comments', {
+    fetch(`${API_URL}/history/comments`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
